@@ -1,0 +1,21 @@
+{
+  "budget": 1000,
+  "currency": "BRL",
+  "shopping": [
+    {
+      "name": "Coca-Cola",
+      "price": 5.0,
+      "quantity": 2
+    },
+    {
+      "name": "Pepsi",
+      "price": 4.5,
+      "quantity": 3
+    },
+    {
+      "name": "Guaraná",
+      "price": 4.0,
+      "quantity": 4
+    }
+  ]
+}
