@@ -105,7 +105,31 @@ struct BudgetAnalysis<'a> {
     total: f64,
     budget_identified: &'a str,
     monthly_income: f64,
+}
 
+impl BudgetAnalysis<'_> {
+    fn print_budget_analysis(&self) {
+        let mut terminal = term::stdout().unwrap();
+    
+        println!("Budget identified: {}", self.budget_identified);
+        println!("Monthly income: {}", self.monthly_income);
+        terminal.fg(term::color::BRIGHT_YELLOW).unwrap();
+
+        println!("============================================================");
+
+        terminal.fg(term::color::BRIGHT_GREEN).unwrap();
+        terminal.attr(term::Attr::Bold).unwrap();
+
+        terminal.attr(term::Attr::Bold).unwrap();
+        terminal.attr(term::Attr::Reverse).unwrap();
+        terminal.attr(term::Attr::Blink).unwrap();
+        print!("Total:");
+
+        terminal.reset().unwrap();
+        terminal.fg(term::color::BRIGHT_GREEN).unwrap();
+
+        println!(" {}", self.total);
+    }
 }
 
 fn main() {
@@ -117,31 +141,10 @@ fn main() {
 
     let budget_identified = if total > budget.monthly_income { "You are over budget" } else { "You are under budget" };
 
-    print_information(&BudgetAnalysis { total, budget_identified, monthly_income: budget.monthly_income });
-}   
-
-fn print_information(information: &BudgetAnalysis) {
-    let mut terminal = term::stdout().unwrap();
+    let budget_analysis = BudgetAnalysis { total, budget_identified, monthly_income: budget.monthly_income };
     
-    println!("Budget identified: {}", information.budget_identified);
-    println!("Monthly income: {}", information.monthly_income);
-    terminal.fg(term::color::BRIGHT_YELLOW).unwrap();
-
-    println!("============================================================");
-
-    terminal.fg(term::color::BRIGHT_GREEN).unwrap();
-    terminal.attr(term::Attr::Bold).unwrap();
-
-    terminal.attr(term::Attr::Bold).unwrap();
-    terminal.attr(term::Attr::Reverse).unwrap();
-    terminal.attr(term::Attr::Blink).unwrap();
-    print!("Total:");
-
-    terminal.reset().unwrap();
-    terminal.fg(term::color::BRIGHT_GREEN).unwrap();
-
-    println!(" {}", information.total);
-}
+    budget_analysis.print_budget_analysis();
+}   
 
 fn read_file(file_name: &str) -> String {
     let mut file = match File::open(file_name) {
